@@ -6,6 +6,7 @@ import SupabaseLogo from "../components/SupabaseLogo";
 import NextJsLogo from "../components/NextJsLogo";
 import DeployButton from "../components/DeployButton";
 import CreateHaikuCard from "@/components/CreateHaikuCard";
+import HaikuCard from "@/components/HaikuCard";
 
 // export const dynamic = "force-dynamic";
 
@@ -39,14 +40,30 @@ export default async function Index() {
 
     //   <CreateHaikuCard />
     // </div>
-
-    <div className="container flex min-h-[200px] ">
-      <div className="min-h-full w-1/4 bg-pink-200">b</div>
-      <div className="flex h-full w-2/4 flex-col ">
-        <div>for you. recent</div>
-        <CreateHaikuCard />
-      </div>
-      <div className="min-h-full w-1/4 bg-pink-300">c</div>
-    </div>
+    <>
+      <section className="container  flex">
+        <div className="hidden min-h-full w-1/4 bg-pink-200 md:block">b</div>
+        <div className="flex h-full w-full flex-col md:w-2/4 ">
+          <div>for you. recent</div>
+          <CreateHaikuCard />
+        </div>
+        <div className="hidden min-h-full w-1/4 bg-pink-300 md:block">c</div>
+      </section>
+      <section className="bg-green-50 min-h-screen container flex flex-row flex-wrap p-6 gap-x-6 gap-y-6">
+        <HaikuCard/>
+        <HaikuCard/>
+        <HaikuCard/>
+        <HaikuCard/>
+        <HaikuCard/>
+        <HaikuCard/>
+        <HaikuCard/>
+        <HaikuCard/>
+        <HaikuCard/>
+        <HaikuCard/>
+        <HaikuCard/>
+        <HaikuCard/>
+        <HaikuCard/>
+      </section>
+    </>
   );
 }
