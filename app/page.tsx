@@ -41,7 +41,7 @@ export default async function Index() {
     //   <CreateHaikuCard />
     // </div>
     <>
-      <section className="container  flex">
+      <section className="container flex">
         <div className="hidden min-h-full w-1/4 bg-pink-200 md:block">b</div>
         <div className="flex h-full w-full flex-col md:w-2/4 ">
           <div>for you. recent</div>
