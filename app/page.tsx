@@ -8,6 +8,9 @@ import DeployButton from "../components/DeployButton";
 import CreateHaikuCard from "@/components/CreateHaikuCard";
 import HaikuCard from "@/components/HaikuCard";
 import AuthCard from "@/components/AuthCard";
+import logo from "@/app/logo.png";
+import Image from "next/image";
+import TopHashtags from "@/components/TopHashtags";
 
 // export const dynamic = "force-dynamic";
 
@@ -42,30 +45,38 @@ export default async function Index() {
     //   <CreateHaikuCard />
     // </div>
     <>
-      <section className="container flex">
-        <div className="hidden min-h-full w-1/4 bg-pink-200 md:block">b</div>
-        <div className="flex h-full w-full flex-col md:w-2/4 ">
-          <div>for you. recent</div>
+      <section className="container flex ">
+        <div className="hidden min-h-full w-1/4 bg-pink-200 md:block p-4">
+          <TopHashtags/>
+        </div>
+        <div className="flex h-full w-full flex-col md:w-2/4 items-center divide-y divide-black">
+          <div className="relative h-14 w-14 my-4">
+            <Image alt="..." src={logo} height={56} width={56} />
+          </div>
+          <div className="h-16 bg-green-300 w-full flex divide-x divide-black">
+            <button className="grow divide-x">For you</button>
+            <button className="grow divide-x">Recent</button>
+          </div>
           <CreateHaikuCard />
         </div>
-        <div className="hidden min-h-full w-1/4 bg-pink-300 md:block p-4">
+        <div className="hidden min-h-full w-1/4 bg-pink-300 p-4 md:block">
           <AuthCard></AuthCard>
         </div>
       </section>
-      <section className="bg-green-50 min-h-screen container flex flex-row flex-wrap p-6 gap-x-6 gap-y-6">
-        <HaikuCard/>
-        <HaikuCard/>
-        <HaikuCard/>
-        <HaikuCard/>
-        <HaikuCard/>
-        <HaikuCard/>
-        <HaikuCard/>
-        <HaikuCard/>
-        <HaikuCard/>
-        <HaikuCard/>
-        <HaikuCard/>
-        <HaikuCard/>
-        <HaikuCard/>
+      <section className="container flex min-h-screen flex-row flex-wrap gap-x-6 gap-y-6 bg-green-50 p-6">
+        <HaikuCard />
+        <HaikuCard />
+        <HaikuCard />
+        <HaikuCard />
+        <HaikuCard />
+        <HaikuCard />
+        <HaikuCard />
+        <HaikuCard />
+        <HaikuCard />
+        <HaikuCard />
+        <HaikuCard />
+        <HaikuCard />
+        <HaikuCard />
       </section>
     </>
   );

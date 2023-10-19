@@ -14,7 +14,7 @@ export default function CreateHaikuCard() {
         <div>
           <input
             type="text"
-            className=" rounded-2xl bg-transparent px-5 py-2 focus:bg-white"
+            className=" rounded-2xl bg-transparent px-5 py-2 focus:bg-white xl:w-4/6 w-full"
             placeholder="#"
           />
         </div>
