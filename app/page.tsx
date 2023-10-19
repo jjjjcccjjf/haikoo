@@ -7,6 +7,7 @@ import NextJsLogo from "../components/NextJsLogo";
 import DeployButton from "../components/DeployButton";
 import CreateHaikuCard from "@/components/CreateHaikuCard";
 import HaikuCard from "@/components/HaikuCard";
+import AuthCard from "@/components/AuthCard";
 
 // export const dynamic = "force-dynamic";
 
@@ -47,7 +48,9 @@ export default async function Index() {
           <div>for you. recent</div>
           <CreateHaikuCard />
         </div>
-        <div className="hidden min-h-full w-1/4 bg-pink-300 md:block">c</div>
+        <div className="hidden min-h-full w-1/4 bg-pink-300 md:block p-4">
+          <AuthCard></AuthCard>
+        </div>
       </section>
       <section className="bg-green-50 min-h-screen container flex flex-row flex-wrap p-6 gap-x-6 gap-y-6">
         <HaikuCard/>
