@@ -12,20 +12,19 @@ import logo from "@/app/logo.png";
 import Image from "next/image";
 import TopHashtags from "@/components/TopHashtags";
 
-// export const dynamic = "force-dynamic";
+export const dynamic = "force-dynamic";
 
 export default async function Index() {
-  // const supabase = createServerComponentClient({ cookies });
+  const supabase = createServerComponentClient({ cookies });
 
-  // const {
-  //   data: { user },
-  // } = await supabase.auth.getUser();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
 
   return (
     // <div className="w-full flex flex-col items-center">
     //   <nav className="w-full flex justify-center border-b border-b-foreground/10 h-16">
     //     <div className="w-full max-w-4xl flex justify-between items-center p-3 text-sm text-foreground">
-    //       <DeployButton />
     //       {user ? (
     //         <div className="flex items-center gap-4">
     //           Hey, {user.email}!
@@ -59,8 +58,8 @@ export default async function Index() {
           </div>
           <CreateHaikuCard />
         </div>
-        <div className="hidden min-h-full w-1/4 bg-pink-300 p-4 md:block">
-          <AuthCard></AuthCard>
+        <div className="hidden min-h-full w-1/4 p-4 md:block">
+          <AuthCard user={user}></AuthCard>
         </div>
       </section>
       <section className="container flex min-h-screen flex-row flex-wrap gap-x-6 gap-y-6 bg-green-50 p-6">
