@@ -3,11 +3,33 @@ import { BsPatchQuestion } from "react-icons/bs";
 
 // TODO: Fix textarea resize issue
 
-export default function CreateHaikuCard() {
+export default async function CreateHaikuCard() {
+  const postHaiku = async (formData: FormData) => {
+    "use server";
+    const body = formData.get("body");
+
+    if (body) {
+      console.log(body);
+    }
+  };
+
+  const postAnonHaiku = async (formData: FormData) => {
+    'use server'
+    const body = formData.get('body')
+
+    if (body) {
+      console.log(body + "anonnnn")
+    }
+  }
+
   return (
-    <div className="relative flex w-full flex-col p-5 after:absolute after:right-12 after:top-24 after:text-red-300 after:content-['Invalid_haiku']">
+    <form
+      className="relative flex w-full flex-col p-5 after:absolute after:right-12 after:top-24 after:text-red-300 after:content-['Invalid_haiku']"
+      action={postHaiku}
+    >
       <textarea
-        className="min-h-[112px] w-full resize-none rounded-2xl p-5 bg-orange-50"
+        className="min-h-[112px] w-full resize-none rounded-2xl bg-orange-50 p-5"
+        name="body"
         placeholder="Create your first Haiku"
       ></textarea>
       <div className="mt-4 flex flex-col">
@@ -28,15 +50,22 @@ export default function CreateHaikuCard() {
             </button>
           </div>
           <div className="flex gap-4">
-            <button className="flex h-12 max-w-prose items-center rounded-full bg-orange-300 px-6 py-3">
+            <button
+              type="submit"
+              className="flex h-12 max-w-prose items-center rounded-full bg-orange-300 px-6 py-3"
+            >
               Post
             </button>
-            <button className="flex h-12 max-w-prose items-center rounded-full bg-orange-300 px-6 py-3">
+            <button
+              type="submit"
+              className="flex h-12 max-w-prose items-center rounded-full bg-orange-300 px-6 py-3"
+              formAction={postAnonHaiku}
+            >
               Post Anonymously
             </button>
           </div>
         </div>
       </div>
-    </div>
+    </form>
   );
 }
