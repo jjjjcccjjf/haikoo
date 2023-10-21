@@ -1,6 +1,16 @@
 import { syllable } from "syllable";
 
-export function isHaiku(text: string) {
+export interface IsHaikuResponse {
+  status: boolean;
+  message: string;
+}
+
+export function isHaiku(text: string): IsHaikuResponse {
+  const data = {
+    status: false,
+    message: "",
+  };
+
   // Remove leading and trailing whitespace
   text = text.trim();
 
@@ -9,9 +19,8 @@ export function isHaiku(text: string) {
 
   // Check if there are exactly 3 lines (5-7-5 syllable structure)
   if (lines.length !== 3) {
-    console.log(`line breaks must be exactly 3. your line breaks: ${lines.length} `);
-    
-    return false;
+    data.message = `Line breaks must be exactly 3. Your line breaks: ${lines.length}.`;
+    return data;
   }
 
   // Define the syllable count for each line
@@ -21,12 +30,16 @@ export function isHaiku(text: string) {
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
     const syllables = syllable(line);
-    console.log(syllables);
-    
+
     if (syllables !== syllableCounts[i]) {
-      return false;
+      data.message = `Must have exactly ${
+        syllableCounts[i]
+      } syllables on line ${++i}. Current syllable count: ${syllables}.`;
+      return data;
     }
   }
 
-  return true;
+  data.status = true;
+  data.message = "OK";
+  return data;
 }
