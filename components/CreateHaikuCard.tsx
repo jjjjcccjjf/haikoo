@@ -1,11 +1,12 @@
 "use client";
 
+import { isHaiku } from "@/utils";
 import { postAnonHaiku } from "@/utils/actions";
 import { User } from "@supabase/supabase-js";
-import React, { useReducer } from "react";
+import React, { useReducer, useRef } from "react";
+import { experimental_useFormStatus as useFormStatus } from "react-dom";
 import { BsPatchQuestion } from "react-icons/bs";
-// import { experimental_useFormState as useFormState } from 'react-dom'
-// import { useFormStatus } from 'react-dom'
+
 
 type Action =
   | { type: "UPDATE_FIELD"; field: string; value: string }
@@ -28,8 +29,32 @@ function reducer(state: typeof initialState, action: Action) {
   }
 }
 
+function Submit() {
+  const { pending } = useFormStatus();
+
+  return (
+    <button
+      type="submit"
+      className="flex h-12 max-w-prose items-center rounded-full bg-orange-300 px-6 py-3 disabled:bg-orange-300/20"
+      disabled={pending}
+      aria-disabled={pending}
+    >
+      Post
+    </button>
+  );
+}
+
 export default function CreateHaikuCard({ user }: { user: User | null }) {
   const [formData, dispatch] = useReducer(reducer, initialState);
+  const formRef = useRef<HTMLFormElement>(null);
+
+  const updateErrorMessage = (
+    element: HTMLFormElement,
+    errorMessage: string,
+  ) => {
+    // Set the 'data-after' attribute to the new error message
+    element.dataset.after = errorMessage;
+  };
 
   const handleFieldChange = (field: string, value: string) => {
     dispatch({ type: "UPDATE_FIELD", field, value });
@@ -39,20 +64,39 @@ export default function CreateHaikuCard({ user }: { user: User | null }) {
     dispatch({ type: "RESET_STATE" });
   };
 
+  const handleFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    const formData = new FormData(event.currentTarget);
+
+    const body = String(formData.get("body"));
+    const res = isHaiku(body);
+    if (!res.status) {
+      if (formRef.current) {
+        updateErrorMessage(formRef.current, res.message);
+      }
+      return event.preventDefault();
+    }
+
+    handleReset();
+    if (formRef.current) {
+      updateErrorMessage(formRef.current, "");
+    }
+  };
+
   return (
     <form
-      className="relative flex w-full flex-col p-5 after:absolute after:right-12 after:top-24 after:text-red-300 after:content-['Invalid_haiku']"
-      action={async (formData) => {
-        const res = await postAnonHaiku(formData)
-        handleFieldChange("formState", res)
-      }}
+      className="relative flex w-full flex-col p-5 after:absolute after:right-12 after:top-28 after:text-red-300 after:content-[attr(data-after)]"
+      action={postAnonHaiku}
+      onSubmit={handleFormSubmit}
+      ref={formRef}
+      data-after=""
     >
       <textarea
-        className="min-h-[112px] w-full resize-none rounded-2xl bg-orange-50 p-5"
+        className="min-h-[128px] w-full resize-none rounded-2xl bg-orange-50 p-5"
         name="body"
         placeholder="Create your first Haiku"
         value={formData.body}
         onChange={(e) => handleFieldChange("body", e.target.value)}
+        onSubmit={(e) => e.preventDefault()}
         required
       ></textarea>
       <div className="mt-4 flex flex-col">
@@ -76,19 +120,7 @@ export default function CreateHaikuCard({ user }: { user: User | null }) {
             </button>
           </div>
           <div className="flex gap-4">
-            <button
-              type="submit"
-              className="flex h-12 max-w-prose items-center rounded-full bg-orange-300 px-6 py-3"
-            >
-              Post
-            </button>
-            <button
-              type="submit"
-              className="flex h-12 max-w-prose items-center rounded-full bg-orange-300 px-6 py-3"
-              formAction={postAnonHaiku}
-            >
-              Post Anonymously
-            </button>
+            <Submit />
           </div>
         </div>
       </div>
