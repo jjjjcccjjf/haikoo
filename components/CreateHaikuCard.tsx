@@ -3,10 +3,9 @@
 import { isHaiku } from "@/utils";
 import { postAnonHaiku } from "@/utils/actions";
 import { User } from "@supabase/supabase-js";
-import React, { useReducer, useRef } from "react";
+import React, { useCallback, useReducer, useRef } from "react";
 import { experimental_useFormStatus as useFormStatus } from "react-dom";
 import { BsPatchQuestion } from "react-icons/bs";
-
 
 type Action =
   | { type: "UPDATE_FIELD"; field: string; value: string }
@@ -15,7 +14,6 @@ type Action =
 const initialState = {
   hashtags: "",
   body: "",
-  formState: "",
 };
 
 function reducer(state: typeof initialState, action: Action) {
@@ -47,6 +45,13 @@ function Submit() {
 export default function CreateHaikuCard({ user }: { user: User | null }) {
   const [formData, dispatch] = useReducer(reducer, initialState);
   const formRef = useRef<HTMLFormElement>(null);
+
+  // const handleHashtagChange = useCallback(
+  //   (newTokenValues: any) => {
+  //     handleFieldChange("hashtags", newTokenValues);
+  //   },
+  //   [formData.hashtags],
+  // );
 
   const updateErrorMessage = (
     element: HTMLFormElement,
@@ -105,14 +110,26 @@ export default function CreateHaikuCard({ user }: { user: User | null }) {
             type="text"
             name="hashtags"
             value={formData.hashtags}
-            onChange={(e) => handleFieldChange("hashtags", e.target.value)}
+            onChange={(e) => {
+              const regex = /^#(?:\w+)(?:\s*#(?:\w+))*$/;
+
+              if (regex.test(e.target.value)) {
+                console.log("Valid input");
+              } else {
+                console.log("Invalid input");
+              }
+
+              handleFieldChange("hashtags", e.target.value);
+            }}
             className=" w-full rounded-2xl bg-transparent px-5 py-2 focus:bg-white xl:w-4/6"
-            placeholder="#"
+            pattern="^#(?:\w+)(?:\s*#(?:\w+))*$"
+            title="#hashtags #must #be #like #this"
+            placeholder="#hashtags #go #hither"
           />
         </div>
         <div className="mt-4 flex justify-between">
           <div className="flex">
-            <button className="group flex gap-2 rounded-full px-4 py-3 hover:bg-red-50">
+            <button className="group flex gap-2 rounded-full px-4 py-3 hover:bg-red-50" type="button">
               <BsPatchQuestion size={24} className="" />
               <span className="hidden group-hover:block">
                 Your Haiku must follow the 5-7-5 syllabic structure.
