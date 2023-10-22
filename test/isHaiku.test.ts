@@ -49,7 +49,14 @@ describe("isHaiku()", () => {
     const inputText =
       "An old silent pond A frog jumps into the pond— Splash! Silence again.";
     const res = isHaiku(inputText);
-    expect(res.status).toBeFalsy();
+    expect(res.status).toBeFalsy(); 
+  });
+
+  test("given a haiku without line breaks but valid syllable count", () => {
+    const inputText =
+      "An old silent pond";
+    const res = isHaiku(inputText);
+    expect(res.status).toBeFalsy(); 
     expect(res.message).toEqual(
       "Line breaks must be exactly 3. Your line breaks: 1.",
     );
@@ -57,7 +64,7 @@ describe("isHaiku()", () => {
 
   test("given a haiku that exceeds 3 line breaks", () => {
     const inputText =
-      "An old silent pond\nA frog jumps into\nthe pond—\nSplash! Silence again.";
+      "An old silent pond\nA frog jumps into the pond—\nSplash! Silence again.\nBut then,";
     const res = isHaiku(inputText);
     expect(res.status).toBeFalsy();
     expect(res.message).toEqual(
