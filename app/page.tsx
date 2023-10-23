@@ -15,7 +15,7 @@ import HaikuCardsSection from "@/components/RealtimeHaikuCardsSection";
 
 // export const dynamic = "force-dynamic";
 
-export const revalidate =0
+export const revalidate = 0;
 
 export default async function Index() {
   const supabase = createServerComponentClient({ cookies });
@@ -24,31 +24,16 @@ export default async function Index() {
     data: { user },
   } = await supabase.auth.getUser();
 
-  const { data } = await supabase.from("haikus").select();
+  // const { data, error } = await supabase.from("haikus").select();
+  const { data, error } = await supabase.from("haikus").select("*, hashtags(*)");
+  // const { data, error } = await supabase.from("haikus").select("*, hashtags(*)").eq("id", 66);
+
+
+  // .select("haikus:haiku_hashtags(hashtags:hashtags(*))")
 
   return (
-    // <div className="w-full flex flex-col items-center">
-    //   <nav className="w-full flex justify-center border-b border-b-foreground/10 h-16">
-    //     <div className="w-full max-w-4xl flex justify-between items-center p-3 text-sm text-foreground">
-    //       {user ? (
-    //         <div className="flex items-center gap-4">
-    //           Hey, {user.email}!
-    //           <LogoutButton />
-    //         </div>
-    //       ) : (
-    //         <Link
-    //           href="/login"
-    //           className="py-2 px-3 flex rounded-md no-underline bg-btn-background hover:bg-btn-background-hover"
-    //         >
-    //           Login
-    //         </Link>
-    //       )}
-    //     </div>
-    //   </nav>
-
-    //   <CreateHaikuCard />
-    // </div>
     <>
+      {/* <pre>{JSON.stringify(data)}</pre> */}
       <section className="container flex border-b border-b-black">
         <div className="hidden min-h-full w-1/4 p-4 md:block">
           <TopHashtags />

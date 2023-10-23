@@ -5,12 +5,17 @@ import endan from "@/app/endan.jpg";
 
 import { Database } from "@/types/supabase";
 
-type HaikuCardContents = Database["public"]["Tables"]["haikus"]["Row"];
+type Haiku = Database["public"]["Tables"]["haikus"]["Row"];
+type Hashtag = Database["public"]["Tables"]["hashtags"]["Row"];
+
+interface HaikuWithHashtags extends Haiku {
+  hashtags: Hashtag[];
+}
 
 export default function HaikuCard({
   contents,
 }: {
-  contents: HaikuCardContents;
+  contents: HaikuWithHashtags;
 }) {
   return (
     <div className=" flex h-auto flex-auto basis-80 flex-row gap-4 rounded-2xl bg-violet-300 px-8 py-4">
@@ -27,7 +32,11 @@ export default function HaikuCard({
         <p>@haikoo</p>
         <pre className="mt-2 font-rubik">{contents.body}</pre>
         <div className="mt-4 flex flex-col gap-2">
-          <p>#test #hello #world</p>
+          <div className="flex gap-1">
+            {contents.hashtags.map((item) => (
+              <span key={item.id}>{item.hashtag}</span>
+            ))}
+          </div>
           <div>
             <button className=" border border-yellow-50">
               <AiOutlineHeart size={24} />

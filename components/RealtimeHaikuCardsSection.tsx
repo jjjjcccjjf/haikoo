@@ -1,21 +1,34 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import HaikuCard from "./HaikuCard";
 import supabase from "@/utils/supabase";
 import { Database } from "@/types/supabase";
 
 type Haiku = Database["public"]["Tables"]["haikus"]["Row"];
+type Hashtag = Database["public"]["Tables"]["hashtags"]["Row"];
 
+interface HaikuWithHashtags extends Haiku {
+  hashtags: Hashtag[];
+}
 export const revalidate = 0;
 
 export default function RealtimeHaikuCardsSection({
   serverHaikus,
 }: {
-  serverHaikus: Haiku[];
+  serverHaikus: HaikuWithHashtags[];
 }) {
 
-  const [haikus, setHaikus] = useState(serverHaikus)
+  const [haikus, setHaikus] = useState(serverHaikus);
+  const handleRealtime = async (payload: any) => {
+    const { data, error } = await supabase
+      .from("haikus")
+      .select("*, hashtags(*)")
+      .eq("id", payload.new.id)
+      .single();
+
+    setHaikus([...haikus, data as HaikuWithHashtags]);
+  };
 
   useEffect(() => {
     const channel = supabase
@@ -27,16 +40,14 @@ export default function RealtimeHaikuCardsSection({
           schema: "public",
           table: "haikus",
         },
-        (payload) => {
-          setHaikus([...haikus, payload.new as Haiku])
-        },
+        handleRealtime,
       )
       .subscribe();
 
     return () => {
       supabase.removeChannel(channel);
     };
-  }, [supabase, haikus, setHaikus]);
+  }, [supabase, haikus, handleRealtime]);
 
   return (
     <section className="container flex min-h-screen flex-row flex-wrap gap-x-6 gap-y-6 p-6">
