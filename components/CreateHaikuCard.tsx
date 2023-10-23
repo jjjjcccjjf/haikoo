@@ -46,13 +46,6 @@ export default function CreateHaikuCard({ user }: { user: User | null }) {
   const [formData, dispatch] = useReducer(reducer, initialState);
   const formRef = useRef<HTMLFormElement>(null);
 
-  // const handleHashtagChange = useCallback(
-  //   (newTokenValues: any) => {
-  //     handleFieldChange("hashtags", newTokenValues);
-  //   },
-  //   [formData.hashtags],
-  // );
-
   const updateErrorMessage = (
     element: HTMLFormElement,
     errorMessage: string,

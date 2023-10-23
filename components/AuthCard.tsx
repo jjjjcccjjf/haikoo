@@ -1,10 +1,10 @@
-"use client"
+"use client";
 
-import React, { useReducer } from "react";
 import endan from "@/app/endan.jpg";
-import Image from "next/image";
-import { FaFacebookSquare, FaGoogle, FaRegSave, FaEdit } from "react-icons/fa";
 import { User } from "@supabase/auth-helpers-nextjs";
+import Image from "next/image";
+import { useReducer } from "react";
+import { FaEdit, FaFacebookSquare, FaGoogle, FaRegSave } from "react-icons/fa";
 
 export default function AuthCard({ user }: { user: User | null }) {
   return (

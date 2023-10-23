@@ -1,7 +1,6 @@
-import Image from "next/image";
-import React from "react";
-import { AiOutlineHeart } from "react-icons/ai";
 import endan from "@/app/endan.jpg";
+import Image from "next/image";
+import { AiOutlineHeart } from "react-icons/ai";
 
 import { Database } from "@/types/supabase";
 
@@ -18,7 +17,7 @@ export default function HaikuCard({
   contents: HaikuWithHashtags;
 }) {
   return (
-    <div className=" flex h-auto flex-auto basis-80 flex-row gap-4 rounded-2xl bg-violet-300 px-8 py-4">
+    <div className=" flex h-auto flex-auto basis-80 flex-row gap-4 px-4 py-4 md:rounded-2xl md:bg-violet-300 xl:max-h-52">
       <div className="relative h-12 w-12">
         <Image
           src={endan}
@@ -28,17 +27,17 @@ export default function HaikuCard({
           width={48}
         ></Image>
       </div>
-      <div className="flex  flex-col justify-between">
-        <p>@haikoo</p>
-        <pre className="mt-2 font-rubik">{contents.body}</pre>
-        <div className="mt-4 flex flex-col gap-2">
-          <div className="flex gap-1">
+      <div className="flex flex-col ">
+        <p className="mt-1 font-bold">@haikoo</p>
+        <pre className="m-1 font-rubik">{contents.body}</pre>
+        <div className="mt-1 flex flex-col gap-3">
+          <div className="flex min-h-[24px] gap-1">
             {contents.hashtags.map((item) => (
               <span key={item.id}>{item.hashtag}</span>
             ))}
           </div>
           <div>
-            <button className=" border border-yellow-50">
+            <button className="">
               <AiOutlineHeart size={24} />
             </button>
           </div>

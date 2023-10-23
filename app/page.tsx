@@ -1,17 +1,11 @@
+import logo from "@/app/logo.png";
+import AuthCard from "@/components/AuthCard";
+import CreateHaikuCard from "@/components/CreateHaikuCard";
+import HaikuCardsSection from "@/components/RealtimeHaikuCardsSection";
+import TopHashtags from "@/components/TopHashtags";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
-import Link from "next/link";
-import LogoutButton from "../components/LogoutButton";
-import SupabaseLogo from "../components/SupabaseLogo";
-import NextJsLogo from "../components/NextJsLogo";
-import DeployButton from "../components/DeployButton";
-import CreateHaikuCard from "@/components/CreateHaikuCard";
-import HaikuCard from "@/components/HaikuCard";
-import AuthCard from "@/components/AuthCard";
-import logo from "@/app/logo.png";
 import Image from "next/image";
-import TopHashtags from "@/components/TopHashtags";
-import HaikuCardsSection from "@/components/RealtimeHaikuCardsSection";
 
 // export const dynamic = "force-dynamic";
 
@@ -25,9 +19,11 @@ export default async function Index() {
   } = await supabase.auth.getUser();
 
   // const { data, error } = await supabase.from("haikus").select();
-  const { data, error } = await supabase.from("haikus").select("*, hashtags(*)");
+  const { data, error } = await supabase
+    .from("haikus")
+    .select("*, hashtags(*)")
+    .order("id", { ascending: false });
   // const { data, error } = await supabase.from("haikus").select("*, hashtags(*)").eq("id", 66);
-
 
   // .select("haikus:haiku_hashtags(hashtags:hashtags(*))")
 
