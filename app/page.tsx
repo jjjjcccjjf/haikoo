@@ -1,7 +1,9 @@
 import logo from "@/app/logo.png";
 import AuthCard from "@/components/AuthCard";
+import AuthCard2 from "@/components/AuthCard2";
 import CreateHaikuCard from "@/components/CreateHaikuCard";
 import HaikuCardsSection from "@/components/RealtimeHaikuCardsSection";
+// import TopHashtags from "@/components/_TopHashtags";
 import TopHashtags from "@/components/TopHashtags";
 import { UserWithProfile } from "@/types";
 import {
@@ -49,22 +51,24 @@ export default async function Index() {
     <>
       {/* <pre>{JSON.stringify(userWithProfile)}</pre> */}
       {/* <pre>{JSON.stringify(data)}</pre> */}
-      <section className="container flex border-b border-b-black">
+      <section className="container flex border-b border-secondary">
         <div className="hidden min-h-full w-1/4 p-4 md:block">
-          <TopHashtags />
+          {/* <TopHashtags /> */}
+          <TopHashtags/>
         </div>
-        <div className="flex h-full w-full flex-col items-center divide-y divide-black md:w-2/4">
+        <div className="flex h-full w-full flex-col items-center divide-y divide-secondary md:w-2/4">
           <div className="relative my-4 h-14 w-14">
             <Image alt="..." src={logo} height={56} width={56} />
           </div>
-          <div className="flex h-16 w-full divide-x divide-black dark:bg-slate-800 dark:text-white">
+          <div className="flex h-16 w-full divide-x divide-secondary bg-background text-foreground">
             <button className="grow divide-x">For you</button>
             <button className="grow divide-x">Recent</button>
           </div>
           <CreateHaikuCard user={userWithProfile} />
         </div>
         <div className="hidden min-h-full w-1/4 p-4 md:block">
-          <AuthCard user={userWithProfile}></AuthCard>
+          <AuthCard2/>
+          {/* <AuthCard user={userWithProfile}></AuthCard> */}
         </div>
       </section>
       <HaikuCardsSection serverHaikus={data ?? []} />

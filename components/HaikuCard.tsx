@@ -24,7 +24,7 @@ export default function HaikuCard({
         <p className="font-bold">{contents.profile?.username ? `@${contents.profile?.username}`: "anonymouse"}</p>
         <pre className=" font-sans">{contents.body}</pre>
         <div className="mt-1 flex flex-col gap-3">
-          <div className="flex min-h-[24px] gap-1">
+          <div className="flex min-h-[24px] gap-1 text-muted-foreground">
             {contents.hashtags.map((item) => (
               <span key={item.id}>{item.hashtag}</span>
             ))}

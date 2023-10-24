@@ -135,10 +135,10 @@ export default function CreateHaikuCard({ user }: { user: User | null }) {
             autoComplete="off"
           ></Input>
         </div>
-        <div className="mt-4 flex justify-between">
+        <div className="mt-4 flex justify-between ">
           <div className="flex">
             <button
-              className="hover:bg-secondary text-secondary-foreground group flex gap-2 h-11 rounded-md px-4 py-3"
+              className="hover:bg-secondary text-secondary-foreground group flex gap-2 h-11 rounded-md px-4 py-3 items-center"
               type="button"
             >
               <BsPatchQuestion
