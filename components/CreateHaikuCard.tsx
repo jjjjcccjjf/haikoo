@@ -6,6 +6,9 @@ import { User } from "@supabase/supabase-js";
 import React, { useReducer, useRef } from "react";
 import { experimental_useFormStatus as useFormStatus } from "react-dom";
 import { BsPatchQuestion } from "react-icons/bs";
+import { Textarea } from "@/components/ui/textarea";
+import { Button } from "./ui/button";
+import { Input } from "./ui/input";
 
 type Action =
   | { type: "UPDATE_FIELD"; field: string; value: string }
@@ -31,14 +34,24 @@ function Submit() {
   const { pending } = useFormStatus();
 
   return (
-    <button
+    // <button
+    //   type="submit"
+    //   className="flex h-12 max-w-prose items-center rounded-full bg-orange-300 px-6 py-3 disabled:bg-orange-300/20"
+    //   disabled={pending}
+    //   aria-disabled={pending}
+    // >
+    //   Post
+    // </button>
+    <Button
       type="submit"
-      className="flex h-12 max-w-prose items-center rounded-full bg-orange-300 px-6 py-3 disabled:bg-orange-300/20"
+      // className="flex h-12 max-w-prose items-center rounded-full bg-orange-300 px-6 py-3 disabled:bg-orange-300/20"
       disabled={pending}
       aria-disabled={pending}
+      variant={"default"}
+      size={"lg"}
     >
       Post
-    </button>
+    </Button>
   );
 }
 
@@ -82,24 +95,25 @@ export default function CreateHaikuCard({ user }: { user: User | null }) {
 
   return (
     <form
-      className="relative flex w-full flex-col p-5 after:absolute after:right-12 after:top-28 after:text-red-300 after:content-[attr(data-after)]"
+      className="after:text-destructive relative flex w-full flex-col p-5 text-foreground after:absolute after:right-12 after:top-28 after:content-[attr(data-after)] "
       action={postHaiku}
       onSubmit={handleFormSubmit}
       ref={formRef}
       data-after=""
     >
-      <textarea
-        className="min-h-[128px] w-full resize-none rounded-2xl bg-orange-50 p-5"
+      <Textarea
+        className="focus-visible:outline-accent placeholder:text-muted-foreground min-h-[128px] w-full resize-none bg-background p-5 focus-visible:outline-0"
         name="body"
         placeholder="Create your first Haiku"
         value={formData.body}
         onChange={(e) => handleFieldChange("body", e.target.value)}
         onSubmit={(e) => e.preventDefault()}
         required
-      ></textarea>
+      />
+
       <div className="mt-4 flex flex-col">
         <div>
-          <input
+          <Input
             type="text"
             name="hashtags"
             value={formData.hashtags}
@@ -114,17 +128,24 @@ export default function CreateHaikuCard({ user }: { user: User | null }) {
 
               handleFieldChange("hashtags", e.target.value);
             }}
-            className=" w-full rounded-2xl bg-transparent px-5 py-2 focus:bg-white xl:w-4/6"
+            className=" w-full bg-transparent px-5 py-2 xl:w-1/2"
             pattern="^#(?:\w+)(?:\s*#(?:\w+))*$"
             title="#hashtags #must #be #like #this"
             placeholder="#hashtags #go #hither"
-          />
+            autoComplete="off"
+          ></Input>
         </div>
         <div className="mt-4 flex justify-between">
           <div className="flex">
-            <button className="group flex gap-2 rounded-full px-4 py-3 hover:bg-red-50" type="button">
-              <BsPatchQuestion size={24} className="" />
-              <span className="hidden group-hover:block">
+            <button
+              className="hover:bg-secondary text-secondary-foreground group flex gap-2 h-11 rounded-md px-4 py-3"
+              type="button"
+            >
+              <BsPatchQuestion
+                size={24}
+                className="fill-muted-foreground group-hover:fill-secondary-foreground"
+              />
+              <span className="hidden group-hover:block text-sm">
                 Your Haiku must follow the 5-7-5 syllabic structure.
               </span>
             </button>

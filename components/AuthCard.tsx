@@ -16,7 +16,7 @@ interface UserWithProfile extends User {
 
 export default function AuthCard({ user }: { user: UserWithProfile | null }) {
   return (
-    <section className="h-full w-full rounded-2xl bg-orange-50 p-4">
+    <section className="h-full w-full rounded-2xl bg-orange-50 dark:bg-slate-800 p-4">
       {user ? <UserCard user={user} /> : <LoginForm />}
     </section>
   );

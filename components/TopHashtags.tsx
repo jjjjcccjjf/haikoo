@@ -2,9 +2,9 @@ import React from "react";
 
 export default function TopHashtags() {
   return (
-    <div className="flex h-full w-full flex-col divide-y divide-black rounded-2xl bg-slate-400 p-4 gap-2">
+    <div className="flex h-full w-full flex-col gap-2 divide-y divide-black rounded-2xl p-4 dark:bg-slate-800 dark:text-white">
       <p className="text-2xl">Top Hashtags</p>
-      <div className="grid grid-flow-row grid-cols-2 text-2xl gap-4 py-4">
+      <div className="grid grid-flow-row grid-cols-2 gap-4 py-4 text-2xl">
         <p className="truncate">#mood</p>
         <p className="truncate">#nature</p>
         <p className="truncate">#life</p>

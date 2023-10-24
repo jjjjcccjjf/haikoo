@@ -1,4 +1,3 @@
-import endan from "@/app/endan.jpg";
 import anonymouse from "@/app/anonymouse.png";
 import Image from "next/image";
 import { AiOutlineHeart } from "react-icons/ai";
@@ -11,7 +10,7 @@ export default function HaikuCard({
   contents: HaikuWithDetails;
 }) {
   return (
-    <div className=" flex h-auto flex-auto basis-80 flex-row gap-4 px-4 py-4 md:rounded-2xl md:bg-orange-100 xl:max-h-52">
+    <div className=" flex h-auto flex-auto basis-80 flex-row gap-4 px-4 md:py-4 py-8 md:rounded-2xl xl:max-h-52 bg-secondary text-foreground ">
       <div className="relative h-12 w-12">
         <Image
           src={anonymouse}
@@ -23,7 +22,7 @@ export default function HaikuCard({
       </div>
       <div className="flex flex-col gap-1">
         <p className="font-bold">{contents.profile?.username ? `@${contents.profile?.username}`: "anonymouse"}</p>
-        <pre className=" font-rubik">{contents.body}</pre>
+        <pre className=" font-sans">{contents.body}</pre>
         <div className="mt-1 flex flex-col gap-3">
           <div className="flex min-h-[24px] gap-1">
             {contents.hashtags.map((item) => (

@@ -57,7 +57,7 @@ export default async function Index() {
           <div className="relative my-4 h-14 w-14">
             <Image alt="..." src={logo} height={56} width={56} />
           </div>
-          <div className="flex h-16 w-full divide-x divide-black bg-green-300">
+          <div className="flex h-16 w-full divide-x divide-black dark:bg-slate-800 dark:text-white">
             <button className="grow divide-x">For you</button>
             <button className="grow divide-x">Recent</button>
           </div>

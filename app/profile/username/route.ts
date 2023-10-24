@@ -3,18 +3,13 @@ import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 
 export const dynamic = "force-dynamic";
-
+// TODO: move this to actions
 export async function POST(request: Request) {
   const requestUrl = new URL(request.url);
   const formData = await request.formData();
   const username = String(formData.get("username"));
   const supabase = createRouteHandlerClient({ cookies });
 
-  // const {error} = await supabase.auth.updateUser({
-  //   data: {
-  //     username: username,
-  //   },
-  // })
   const {
     data: { user },
   } = await supabase.auth.getUser();
@@ -23,9 +18,6 @@ export async function POST(request: Request) {
     .from("profiles")
     .update({ username: username })
     .eq("id", user?.id);
-
-// console.log(data, error);
-
 
   if (error) {
     return NextResponse.redirect(
