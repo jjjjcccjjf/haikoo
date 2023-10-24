@@ -2,19 +2,12 @@ import endan from "@/app/endan.jpg";
 import Image from "next/image";
 import { AiOutlineHeart } from "react-icons/ai";
 
-import { Database } from "@/types/supabase";
-
-type Haiku = Database["public"]["Tables"]["haikus"]["Row"];
-type Hashtag = Database["public"]["Tables"]["hashtags"]["Row"];
-
-interface HaikuWithHashtags extends Haiku {
-  hashtags: Hashtag[];
-}
+import { HaikuWithDetails } from "@/types";
 
 export default function HaikuCard({
   contents,
 }: {
-  contents: HaikuWithHashtags;
+  contents: HaikuWithDetails;
 }) {
   return (
     <div className=" flex h-auto flex-auto basis-80 flex-row gap-4 px-4 py-4 md:rounded-2xl md:bg-orange-100 xl:max-h-52">
@@ -28,7 +21,7 @@ export default function HaikuCard({
         ></Image>
       </div>
       <div className="flex flex-col gap-1">
-        <p className="font-bold">@haikoo</p>
+        <p className="font-bold">{contents.profile?.username ?? "anon"}</p>
         <pre className=" font-rubik">{contents.body}</pre>
         <div className="mt-1 flex flex-col gap-3">
           <div className="flex min-h-[24px] gap-1">

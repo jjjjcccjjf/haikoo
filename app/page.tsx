@@ -3,7 +3,10 @@ import AuthCard from "@/components/AuthCard";
 import CreateHaikuCard from "@/components/CreateHaikuCard";
 import HaikuCardsSection from "@/components/RealtimeHaikuCardsSection";
 import TopHashtags from "@/components/TopHashtags";
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
+import { UserWithProfile } from "@/types";
+import {
+  createServerComponentClient
+} from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import Image from "next/image";
 
@@ -25,28 +28,26 @@ export default async function Index() {
       .select()
       .eq("id", user.id)
       .single();
-    userWithProfile = { ...user, profile: userWithProfile.data };
+    userWithProfile = {
+      ...user,
+      profile: userWithProfile.data,
+    } as UserWithProfile;
   }
 
-  // const { data, error } = await supabase.from("haikus").select();
   const { data, error } = await supabase
     .from("haikus")
     .select(
-      `
-        *,
+      `*,
         hashtags(*),
-        username: profiles(username)
-    `,
+        profile: profiles(*)`,
     )
     .order("id", { ascending: false });
-  // const { data, error } = await supabase.from("haikus").select("*, hashtags(*)").eq("id", 66);
 
-  // .select("haikus:haiku_hashtags(hashtags:hashtags(*))")
-  console.log(error);
+  // console.log(error);
 
   return (
     <>
-      <pre>{JSON.stringify(userWithProfile)}</pre>
+      {/* <pre>{JSON.stringify(userWithProfile)}</pre> */}
       {/* <pre>{JSON.stringify(data)}</pre> */}
       <section className="container flex border-b border-b-black">
         <div className="hidden min-h-full w-1/4 p-4 md:block">

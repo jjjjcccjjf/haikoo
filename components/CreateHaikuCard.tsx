@@ -3,7 +3,7 @@
 import { isHaiku } from "@/utils";
 import { postAnonHaiku } from "@/utils/actions";
 import { User } from "@supabase/supabase-js";
-import React, { useCallback, useReducer, useRef } from "react";
+import React, { useReducer, useRef } from "react";
 import { experimental_useFormStatus as useFormStatus } from "react-dom";
 import { BsPatchQuestion } from "react-icons/bs";
 
