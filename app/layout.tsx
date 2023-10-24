@@ -21,7 +21,7 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <main
-          className={`_NO:bg-background flex min-h-screen flex-col items-center bg-orange-100 ${rubik.variable} font-rubik`}
+          className={`_NO:bg-background flex min-h-screen flex-col items-center bg-neutral-50 ${rubik.variable} font-rubik`}
         >
           {children}
         </main>

@@ -49,7 +49,7 @@ export default function RealtimeHaikuCardsSection({
   }, [supabase, haikus, handleRealtime]);
 
   return (
-    <section className="container flex min-h-screen flex-row flex-wrap content-start divide-y divide-black md:gap-6 md:p-6">
+    <section className="container flex min-h-screen flex-row flex-wrap content-start divide-y divide-black md:gap-6 md:p-6 md:divide-none">
       {haikus.map((item) => {
         return <HaikuCard contents={item} key={item.id} />;
       })}

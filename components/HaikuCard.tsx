@@ -17,7 +17,7 @@ export default function HaikuCard({
   contents: HaikuWithHashtags;
 }) {
   return (
-    <div className=" flex h-auto flex-auto basis-80 flex-row gap-4 px-4 py-4 md:rounded-2xl md:bg-violet-300 xl:max-h-52">
+    <div className=" flex h-auto flex-auto basis-80 flex-row gap-4 px-4 py-4 md:rounded-2xl md:bg-orange-100 xl:max-h-52">
       <div className="relative h-12 w-12">
         <Image
           src={endan}
@@ -27,16 +27,16 @@ export default function HaikuCard({
           width={48}
         ></Image>
       </div>
-      <div className="flex flex-col ">
-        <p className="mt-1 font-bold">@haikoo</p>
-        <pre className="m-1 font-rubik">{contents.body}</pre>
+      <div className="flex flex-col gap-1">
+        <p className="font-bold">@haikoo</p>
+        <pre className=" font-rubik">{contents.body}</pre>
         <div className="mt-1 flex flex-col gap-3">
           <div className="flex min-h-[24px] gap-1">
             {contents.hashtags.map((item) => (
               <span key={item.id}>{item.hashtag}</span>
             ))}
           </div>
-          <div>
+          <div className="flex">
             <button className="">
               <AiOutlineHeart size={24} />
             </button>

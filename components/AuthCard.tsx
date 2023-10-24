@@ -1,12 +1,20 @@
 "use client";
 
 import endan from "@/app/endan.jpg";
+import { Database } from "@/types/supabase";
 import { User } from "@supabase/auth-helpers-nextjs";
 import Image from "next/image";
-import { useReducer } from "react";
+import { useReducer, useState } from "react";
 import { FaEdit, FaFacebookSquare, FaGoogle, FaRegSave } from "react-icons/fa";
 
-export default function AuthCard({ user }: { user: User | null }) {
+type Profile = Database["public"]["Tables"]["profiles"]["Row"]
+
+interface UserWithProfile extends User {
+  profile: Profile
+}
+
+
+export default function AuthCard({ user }: { user: UserWithProfile | null }) {
   return (
     <section className="h-full w-full rounded-2xl bg-orange-50 p-4">
       {user ? <UserCard user={user} /> : <LoginForm />}
@@ -14,7 +22,7 @@ export default function AuthCard({ user }: { user: User | null }) {
   );
 }
 
-function UserCard({ user }: { user: User }) {
+function UserCard({ user }: { user: UserWithProfile }) {
   const [isEditMode, toggleEditMode] = useReducer((prev) => !prev, false);
 
   return (
@@ -54,12 +62,13 @@ function LogoutForm() {
   );
 }
 
-function Username({ user }: { user: User }) {
+function Username({ user }: { user: UserWithProfile }) {
+  
   return (
     <div className="flex flex-row gap-4">
       <button className="group flex items-center gap-2 font-mono">
         <span className="group-hover:underline">
-          @{user.user_metadata.username}
+          @{user.profile.username}
         </span>{" "}
         <FaEdit className="hidden group-hover:block" />{" "}
       </button>
@@ -67,7 +76,8 @@ function Username({ user }: { user: User }) {
   );
 }
 
-function UpdateUsernameForm({ user }: { user: User }) {
+function UpdateUsernameForm({ user }: { user: UserWithProfile }) {
+  const [username, setUsername] = useState(user.profile.username??"")
   return (
     <form
       className="group flex h-12 items-center  justify-center gap-2 rounded-2xl bg-neutral-50 px-1  outline-2 focus-within:outline"
@@ -81,7 +91,8 @@ function UpdateUsernameForm({ user }: { user: User }) {
         name="username"
         required
         placeholder="awesome_user"
-        value={user.user_metadata.username}
+        value={username}
+        onChange={e => setUsername(e.target.value)}
       />
       <button className=" rounded-2xl p-2 hover:bg-orange-300">
         <FaRegSave size={24} />

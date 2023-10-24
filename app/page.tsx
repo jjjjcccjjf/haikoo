@@ -13,22 +13,40 @@ export const revalidate = 0;
 
 export default async function Index() {
   const supabase = createServerComponentClient({ cookies });
+  let userWithProfile = null;
 
   const {
     data: { user },
   } = await supabase.auth.getUser();
 
+  if (user) {
+    userWithProfile = await supabase
+      .from("profiles")
+      .select()
+      .eq("id", user.id)
+      .single();
+    userWithProfile = { ...user, profile: userWithProfile.data };
+  }
+
   // const { data, error } = await supabase.from("haikus").select();
   const { data, error } = await supabase
     .from("haikus")
-    .select("*, hashtags(*)")
+    .select(
+      `
+        *,
+        hashtags(*),
+        username: profiles(username)
+    `,
+    )
     .order("id", { ascending: false });
   // const { data, error } = await supabase.from("haikus").select("*, hashtags(*)").eq("id", 66);
 
   // .select("haikus:haiku_hashtags(hashtags:hashtags(*))")
+  console.log(error);
 
   return (
     <>
+      <pre>{JSON.stringify(userWithProfile)}</pre>
       {/* <pre>{JSON.stringify(data)}</pre> */}
       <section className="container flex border-b border-b-black">
         <div className="hidden min-h-full w-1/4 p-4 md:block">
@@ -42,10 +60,10 @@ export default async function Index() {
             <button className="grow divide-x">For you</button>
             <button className="grow divide-x">Recent</button>
           </div>
-          <CreateHaikuCard user={user} />
+          <CreateHaikuCard user={userWithProfile} />
         </div>
         <div className="hidden min-h-full w-1/4 p-4 md:block">
-          <AuthCard user={user}></AuthCard>
+          <AuthCard user={userWithProfile}></AuthCard>
         </div>
       </section>
       <HaikuCardsSection serverHaikus={data ?? []} />
