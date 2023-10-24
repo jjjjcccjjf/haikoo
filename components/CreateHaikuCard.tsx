@@ -1,7 +1,7 @@
 "use client";
 
 import { isHaiku } from "@/utils";
-import { postAnonHaiku } from "@/utils/actions";
+import { postHaiku } from "@/utils/actions";
 import { User } from "@supabase/supabase-js";
 import React, { useReducer, useRef } from "react";
 import { experimental_useFormStatus as useFormStatus } from "react-dom";
@@ -83,7 +83,7 @@ export default function CreateHaikuCard({ user }: { user: User | null }) {
   return (
     <form
       className="relative flex w-full flex-col p-5 after:absolute after:right-12 after:top-28 after:text-red-300 after:content-[attr(data-after)]"
-      action={postAnonHaiku}
+      action={postHaiku}
       onSubmit={handleFormSubmit}
       ref={formRef}
       data-after=""

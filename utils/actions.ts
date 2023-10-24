@@ -1,21 +1,28 @@
 "use server";
-import supabase from "./supabase";
-import { Database } from "@/types/supabase";
 
-type Haiku = Database["public"]["Tables"]["haikus"]["Row"];
-type Hashtag = Database["public"]["Tables"]["hashtags"]["Row"];
+import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs";
+import { cookies } from "next/headers";
 
-const postAnonHaiku = async (formData: FormData) => {
+
+const postHaiku = async (formData: FormData) => {
+  const supabase = createRouteHandlerClient({ cookies });
+
   try {
     const body = String(formData.get("body"));
     const hashtags = String(formData.get("hashtags"));
 
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+    
+    console.log(user);
+    
     // Insert into the 'haikus' table
     const haikusInsert = await supabase
       .from("haikus")
       .insert([
         {
-          author_id: null,
+          author_id: user?.id,
           body,
         },
       ])
@@ -36,14 +43,12 @@ const postAnonHaiku = async (formData: FormData) => {
       if (hashtag) {
         const hashtagsInsert = await supabase
           .from("hashtags")
-          .upsert(
-            [
-              {
-                haiku_id: haikusInsert.data.id,
-                hashtag: hashtag,
-              },
-            ]
-          )
+          .upsert([
+            {
+              haiku_id: haikusInsert.data.id,
+              hashtag: hashtag,
+            },
+          ])
           .select()
           .single();
 
@@ -62,4 +67,4 @@ const postAnonHaiku = async (formData: FormData) => {
   }
 };
 
-export { postAnonHaiku };
+export { postHaiku };
