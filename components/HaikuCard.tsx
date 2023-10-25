@@ -29,7 +29,10 @@ export default function HaikuCard({
                 ? `@${contents.profile?.username}`
                 : "anonymouse"}
             </p>
-            <div className="mt-0.5">weqweqweqweqwe</div>
+            <div className="mt-0.5">
+              lost in multitudes of paracosms but yeah, I smell like coffee, is
+              that okay?
+            </div>
           </div>
         </figcaption>
         <blockquote className="mt-6 w-full text-card-foreground">
@@ -57,10 +60,9 @@ export function HaikuCardSkeleton({
 }: {
   variant?: "default" | "nohashtags";
 }) {
-  const hashtagsClasses = cn(
-      "mt-6 flex min-h-[24px] w-full gap-2",
-      { "hidden": variant === "nohashtags" },
-  );
+  const hashtagsClasses = cn("mt-6 flex min-h-[24px] w-full gap-2", {
+    hidden: variant === "nohashtags",
+  });
   return (
     <li>
       <figure className="relative flex flex-col rounded-lg border bg-card p-6 text-card-foreground shadow-sm">

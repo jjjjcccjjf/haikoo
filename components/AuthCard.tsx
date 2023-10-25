@@ -17,6 +17,7 @@ import { FaFacebookSquare, FaGoogle, FaRegSave } from "react-icons/fa";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { TypographyP } from "./ui/typography";
+import { Textarea } from "./ui/textarea";
 type Profile = Database["public"]["Tables"]["profiles"]["Row"];
 
 interface UserWithProfile extends User {
@@ -56,8 +57,8 @@ function UserCard({ user }: { user: UserWithProfile }) {
         <div className="relative">
           <Image
             src={endan}
-            height={86}
-            width={86}
+            height={80}
+            width={80}
             alt="..."
             className=" absolute -top-12 rounded-full border-2 border-orange-50"
           ></Image>
@@ -65,6 +66,7 @@ function UserCard({ user }: { user: UserWithProfile }) {
             className="absolute right-0 font-normal text-muted-foreground"
             variant={"link"}
             onClick={toggleEditMode}
+            size={"sm"}
           >
             Edit profile
           </Button>
@@ -72,9 +74,9 @@ function UserCard({ user }: { user: UserWithProfile }) {
       </div>
       <div className="mt-14 flex items-center justify-between">
         {isEditMode ? (
-          <UpdateUsernameForm user={user} />
+          <UpdateProfileForm user={user} />
         ) : (
-          <Username user={user} />
+          <Profile user={user} />
         )}
       </div>
     </>
@@ -88,6 +90,7 @@ function LogoutForm() {
         type="submit"
         className="font-normal text-muted-foreground"
         variant={"link"}
+        size={"sm"}
       >
         Logout
       </Button>
@@ -95,38 +98,45 @@ function LogoutForm() {
   );
 }
 
-function Username({ user }: { user: UserWithProfile }) {
+function Profile({ user }: { user: UserWithProfile }) {
   return (
     <div className="flex flex-col">
-      <TypographyP className="font-mono">@{user.profile.username}</TypographyP>
+      <TypographyP className="font-bold">@{user.profile.username}</TypographyP>
       <TypographyP>
-        lost in multitudes of paracosms but yeah, I smell like coffee, is that okay?
+        lost in multitudes of paracosms but yeah, I smell like coffee, is that
+        okay?
       </TypographyP>
     </div>
   );
 }
 
-function UpdateUsernameForm({ user }: { user: UserWithProfile }) {
+function UpdateProfileForm({ user }: { user: UserWithProfile }) {
   const [username, setUsername] = useState(user.profile.username ?? "");
   return (
     <form
-      className="group flex h-12 items-center  justify-center gap-2 rounded-2xl bg-neutral-50 px-1  outline-2 focus-within:outline"
+      className="flex w-full flex-col"
       action="/profile/username"
       method="POST"
     >
-      <span className="pl-2">@</span>
-      <input
-        type="text"
-        className="min-w-[86px] max-w-[128px] bg-transparent outline-none"
-        name="username"
-        required
-        placeholder="awesome_user"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
+      <div className="relative">
+        <Input
+          type="text"
+          className="max-full bg-transparent outline-none pl-7"
+          name="username"
+          required
+          placeholder="awesome_user"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+        />
+        <span className="absolute top-2 left-3 pointer-events-none text-muted-foreground">@</span>
+      </div>
+      <Textarea
+        className="mt-6 resize-none"
+        placeholder="Edit your status here"
       />
-      <button className=" rounded-2xl p-2 hover:bg-orange-300">
-        <FaRegSave size={24} />
-      </button>
+      <Button className="mt-6" size={"lg"} type="submit">
+        Save Changes
+      </Button>
     </form>
   );
 }
