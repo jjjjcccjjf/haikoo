@@ -6,9 +6,7 @@ import HaikuCardsSection from "@/components/RealtimeHaikuCardsSection";
 // import TopHashtags from "@/components/_TopHashtags";
 import TopHashtags from "@/components/TopHashtags";
 import { UserWithProfile } from "@/types";
-import {
-  createServerComponentClient
-} from "@supabase/auth-helpers-nextjs";
+import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import Image from "next/image";
 
@@ -53,8 +51,7 @@ export default async function Index() {
       {/* <pre>{JSON.stringify(data)}</pre> */}
       <section className="container flex border-b border-secondary">
         <div className="hidden min-h-full w-1/4 p-4 md:block">
-          {/* <TopHashtags /> */}
-          <TopHashtags/>
+          <TopHashtags />
         </div>
         <div className="flex h-full w-full flex-col items-center divide-y divide-secondary md:w-2/4">
           <div className="relative my-4 h-14 w-14">
@@ -67,7 +64,6 @@ export default async function Index() {
           <CreateHaikuCard user={userWithProfile} />
         </div>
         <div className="hidden min-h-full w-1/4 p-4 md:block">
-          {/* <AuthCard2/> */}
           <AuthCard user={userWithProfile}></AuthCard>
         </div>
       </section>

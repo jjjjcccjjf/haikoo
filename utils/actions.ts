@@ -3,20 +3,16 @@
 import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 
-
 const postHaiku = async (formData: FormData) => {
-  const supabase = createRouteHandlerClient({ cookies });
-
   try {
+    const supabase = createRouteHandlerClient({ cookies });
     const body = String(formData.get("body"));
     const hashtags = String(formData.get("hashtags"));
 
     const {
       data: { user },
     } = await supabase.auth.getUser();
-    
-    console.log(user);
-    
+
     // Insert into the 'haikus' table
     const haikusInsert = await supabase
       .from("haikus")
@@ -52,8 +48,6 @@ const postHaiku = async (formData: FormData) => {
           .select()
           .single();
 
-        // console.log(hashtagsInsert);
-
         if (hashtagsInsert.error) {
           throw hashtagsInsert.error;
         }
@@ -67,4 +61,26 @@ const postHaiku = async (formData: FormData) => {
   }
 };
 
-export { postHaiku };
+const updateProfile = async (formData: FormData) => {
+  try {
+    const supabase = createRouteHandlerClient({ cookies });
+    const username = String(formData.get("username"));
+    const status = String(formData.get("status"));
+
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+
+    const { data, error } = await supabase
+      .from("profiles")
+      .update({ username, status })
+      .eq("id", user?.id);
+
+    return "success";
+  } catch (error) {
+    console.error("Error:", error);
+    return "error";
+  }
+};
+
+export { postHaiku, updateProfile };

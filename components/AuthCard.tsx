@@ -13,11 +13,12 @@ import { Database } from "@/types/supabase";
 import { User } from "@supabase/auth-helpers-nextjs";
 import Image from "next/image";
 import { useReducer, useState } from "react";
-import { FaFacebookSquare, FaGoogle, FaRegSave } from "react-icons/fa";
+import { FaFacebookSquare, FaGoogle } from "react-icons/fa";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
-import { TypographyP } from "./ui/typography";
 import { Textarea } from "./ui/textarea";
+import { TypographyP } from "./ui/typography";
+import { updateProfile } from "@/utils/actions";
 type Profile = Database["public"]["Tables"]["profiles"]["Row"];
 
 interface UserWithProfile extends User {
@@ -102,37 +103,41 @@ function Profile({ user }: { user: UserWithProfile }) {
   return (
     <div className="flex flex-col">
       <TypographyP className="font-bold">@{user.profile.username}</TypographyP>
-      <TypographyP>
-        lost in multitudes of paracosms but yeah, I smell like coffee, is that
-        okay?
-      </TypographyP>
+      <TypographyP>{user.profile.status ?? <span className="text-muted-foreground italic text-sm">No status yet</span>}</TypographyP>
     </div>
   );
 }
 
+// TODO: Fix this server action
 function UpdateProfileForm({ user }: { user: UserWithProfile }) {
   const [username, setUsername] = useState(user.profile.username ?? "");
+  const [status, setStatus] = useState(user.profile.status ?? "");
   return (
     <form
       className="flex w-full flex-col"
-      action="/profile/username"
+      action={updateProfile}
       method="POST"
     >
       <div className="relative">
         <Input
           type="text"
-          className="max-full bg-transparent outline-none pl-7"
+          className="max-full bg-transparent pl-7 outline-none"
           name="username"
           required
           placeholder="awesome_user"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
         />
-        <span className="absolute top-2 left-3 pointer-events-none text-muted-foreground">@</span>
+        <span className="pointer-events-none absolute left-3 top-2 text-muted-foreground">
+          @
+        </span>
       </div>
       <Textarea
         className="mt-6 resize-none"
         placeholder="Edit your status here"
+        value={status}
+        onChange={(e) => setStatus(e.target.value)}
+        name="status"
       />
       <Button className="mt-6" size={"lg"} type="submit">
         Save Changes
