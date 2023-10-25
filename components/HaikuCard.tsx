@@ -23,16 +23,13 @@ export default function HaikuCard({
             loading="lazy"
             decoding="async"
           />
-          <div className="flex-auto">
+          <div className="flex-auto xl:max-w-[275px] lg:max-w-[150px]">
             <p className="text-base font-semibold text-card-foreground">
               {contents.profile?.username
                 ? `@${contents.profile?.username}`
                 : "anonymouse"}
             </p>
-            <div className="mt-0.5">
-              lost in multitudes of paracosms but yeah, I smell like coffee, is
-              that okay?
-            </div>
+            <p className="mt-0.5 text-muted-foreground truncate">{contents.profile?.status}</p>
           </div>
         </figcaption>
         <blockquote className="mt-6 w-full text-card-foreground">
@@ -69,17 +66,16 @@ export function HaikuCardSkeleton({
         <figcaption className="flex items-center space-x-4">
           <Skeleton className="h-14 w-14 flex-none rounded-full object-cover" />
           <div className="flex-auto">
-            <Skeleton className="h-2 w-[200px]" />
-            <Skeleton className="mt-4 h-2 w-[100px]" />
+            <Skeleton className="h-2 w-1/3" />
+            <Skeleton className="mt-4 h-2 w-3/4" />
           </div>
         </figcaption>
         <blockquote className="mt-6 w-full">
-          <Skeleton className="h-2 w-[150px]" />
-          <Skeleton className="mt-4 h-2 w-[250px]" />
-          <Skeleton className="mt-4 h-2 w-[200px]" />
+          <Skeleton className="h-2 w-1/3" />
+          <Skeleton className="mt-4 h-2 w-2/3" />
+          <Skeleton className="mt-4 h-2 w-1/2" />
         </blockquote>
         <div className={hashtagsClasses}>
-          <Skeleton className="h-2 w-[50px]" />
           <Skeleton className="h-2 w-[50px]" />
           <Skeleton className="h-2 w-[50px]" />
           <Skeleton className="h-2 w-[50px]" />

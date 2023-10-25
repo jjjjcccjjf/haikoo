@@ -103,7 +103,13 @@ function Profile({ user }: { user: UserWithProfile }) {
   return (
     <div className="flex flex-col">
       <TypographyP className="font-bold">@{user.profile.username}</TypographyP>
-      <TypographyP>{user.profile.status ?? <span className="text-muted-foreground italic text-sm">No status yet</span>}</TypographyP>
+      <TypographyP>
+        {user.profile.status ?? (
+          <span className="text-sm italic text-muted-foreground">
+            No status yet
+          </span>
+        )}
+      </TypographyP>
     </div>
   );
 }
@@ -113,11 +119,7 @@ function UpdateProfileForm({ user }: { user: UserWithProfile }) {
   const [username, setUsername] = useState(user.profile.username ?? "");
   const [status, setStatus] = useState(user.profile.status ?? "");
   return (
-    <form
-      className="flex w-full flex-col"
-      action={updateProfile}
-      method="POST"
-    >
+    <form className="flex w-full flex-col" action={updateProfile}>
       <div className="relative">
         <Input
           type="text"
