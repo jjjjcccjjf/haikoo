@@ -1,5 +1,4 @@
 import logo from "@/app/logo.png";
-import AuthCard from "@/components/AuthCard";
 import AuthCard2 from "@/components/AuthCard2";
 import CreateHaikuCard from "@/components/CreateHaikuCard";
 import HaikuCardsSection from "@/components/RealtimeHaikuCardsSection";

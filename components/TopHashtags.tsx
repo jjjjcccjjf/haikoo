@@ -66,6 +66,43 @@ export default function TopHashtags() {
           >
             #contemporarixepliasadkljkasd
           </Link>
+          <Link
+            href="/"
+            className="truncate text-primary underline-offset-4 hover:underline "
+          >
+            #contemporarixepliasadkljkasd
+          </Link>
+          <Link
+            href="/"
+            className="truncate text-primary underline-offset-4 hover:underline "
+          >
+            #contemporarixepliasadkljkasd
+          </Link>
+          <Link
+            href="/"
+            className="truncate text-primary underline-offset-4 hover:underline "
+          >
+            #contemporarixepliasadkljkasd
+          </Link>
+          <Link
+            href="/"
+            className="truncate text-primary underline-offset-4 hover:underline "
+          >
+            #contemporarixepliasadkljkasd
+          </Link>
+          <Link
+            href="/"
+            className="truncate text-primary underline-offset-4 hover:underline "
+          >
+            #contemporarixepliasadkljkasd
+          </Link>
+          <Link
+            href="/"
+            className="truncate text-primary underline-offset-4 hover:underline "
+          >
+            #contemporarixepliasadkljkasd
+          </Link>
+          
         </div>
       </CardContent>
       {/* <CardFooter>
