@@ -1,4 +1,5 @@
 import logo from "@/app/logo.png";
+import AuthCard from "@/components/AuthCard";
 import AuthCard2 from "@/components/AuthCard2";
 import CreateHaikuCard from "@/components/CreateHaikuCard";
 import HaikuCardsSection from "@/components/RealtimeHaikuCardsSection";
@@ -66,8 +67,8 @@ export default async function Index() {
           <CreateHaikuCard user={userWithProfile} />
         </div>
         <div className="hidden min-h-full w-1/4 p-4 md:block">
-          <AuthCard2/>
-          {/* <AuthCard user={userWithProfile}></AuthCard> */}
+          {/* <AuthCard2/> */}
+          <AuthCard user={userWithProfile}></AuthCard>
         </div>
       </section>
       <HaikuCardsSection serverHaikus={data ?? []} />
