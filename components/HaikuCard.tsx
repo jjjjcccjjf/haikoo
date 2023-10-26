@@ -13,8 +13,8 @@ export default function HaikuCard({
   contents: HaikuWithDetails;
 }) {
   return (
-    <li className="text-sm leading-6">
-      <figure className="dark:highlight-white/5 relative flex flex-col rounded-lg border bg-card p-6 text-card-foreground shadow-sm">
+    <li className=" text-sm leading-6 ">
+      <figure className="dark:highlight-white/5 relative flex flex-col rounded-lg bg-card p-6 text-card-foreground shadow-sm border">
         <figcaption className="flex items-center space-x-4">
           <Image
             src={anonymouse}
@@ -23,26 +23,28 @@ export default function HaikuCard({
             loading="lazy"
             decoding="async"
           />
-          <div className="flex-auto xl:max-w-[275px] lg:max-w-[150px]">
+          <div className="max-w-[175px] flex-auto lg:max-w-[150px] xl:max-w-[275px]">
             <p className="text-base font-semibold text-card-foreground">
               {contents.profile?.username
                 ? `@${contents.profile?.username}`
                 : "anonymouse"}
             </p>
-            <p className="mt-0.5 text-muted-foreground truncate">{contents.profile?.status}</p>
+            <p className="mt-0.5 truncate text-muted-foreground">
+              {contents.profile?.status}
+            </p>
           </div>
         </figcaption>
-        <blockquote className="mt-6 w-full text-card-foreground">
+        <blockquote className="mt-4 w-full text-card-foreground">
           <pre className="font-sans">{contents.body}</pre>
         </blockquote>
         {contents.hashtags.length > 0 && (
-          <div className="mt-6 flex min-h-[24px] w-full gap-1 text-muted-foreground ">
+          <div className="mt-3 flex min-h-[24px] w-full gap-1 text-muted-foreground ">
             {contents.hashtags.map((item) => (
               <span key={item.id}>{item.hashtag}</span>
             ))}
           </div>
         )}
-        <div className="mt-6 flex">
+        <div className="mt-4 flex items-center">
           <button className="">
             <AiOutlineHeart size={24} />
           </button>
