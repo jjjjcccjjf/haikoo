@@ -49,7 +49,7 @@ export default async function Index() {
     <>
       {/* <pre>{JSON.stringify(userWithProfile)}</pre> */}
       {/* <pre>{JSON.stringify(data)}</pre> */}
-      <section className="container flex border-b border-secondary">
+      <section className="container flex border-b border-secondary md:p-8 p-4">
         <div className="hidden min-h-full w-1/4 p-4 md:block">
           <TopHashtags />
         </div>

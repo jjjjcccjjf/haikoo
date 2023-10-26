@@ -34,14 +34,6 @@ function Submit() {
   const { pending } = useFormStatus();
 
   return (
-    // <button
-    //   type="submit"
-    //   className="flex h-12 max-w-prose items-center rounded-full bg-orange-300 px-6 py-3 disabled:bg-orange-300/20"
-    //   disabled={pending}
-    //   aria-disabled={pending}
-    // >
-    //   Post
-    // </button>
     <Button
       type="submit"
       // className="flex h-12 max-w-prose items-center rounded-full bg-orange-300 px-6 py-3 disabled:bg-orange-300/20"
@@ -95,14 +87,14 @@ export default function CreateHaikuCard({ user }: { user: User | null }) {
 
   return (
     <form
-      className="after:text-destructive relative flex w-full flex-col p-5 text-foreground after:absolute after:right-12 after:top-28 after:content-[attr(data-after)] "
+      className="relative flex w-full flex-col lg:p-5 pt-8 pb-4 text-foreground after:absolute after:right-12 after:top-28 after:text-destructive after:content-[attr(data-after)] "
       action={postHaiku}
       onSubmit={handleFormSubmit}
       ref={formRef}
       data-after=""
     >
       <Textarea
-        className="focus-visible:outline-accent placeholder:text-muted-foreground min-h-[128px] w-full resize-none bg-background p-5 focus-visible:outline-0"
+        className="min-h-[128px] w-full resize-none bg-background p-5 placeholder:text-muted-foreground focus-visible:outline-0 focus-visible:outline-accent"
         name="body"
         placeholder="Create your first Haiku"
         value={formData.body}
@@ -138,14 +130,14 @@ export default function CreateHaikuCard({ user }: { user: User | null }) {
         <div className="mt-4 flex justify-between ">
           <div className="flex">
             <button
-              className="hover:bg-secondary text-secondary-foreground group flex gap-2 h-11 rounded-md px-4 py-3 items-center"
+              className="group flex h-11 items-center gap-2 rounded-md px-4 py-3 text-secondary-foreground hover:bg-secondary"
               type="button"
             >
               <BsPatchQuestion
                 size={24}
                 className="fill-muted-foreground group-hover:fill-secondary-foreground"
               />
-              <span className="hidden group-hover:block text-sm">
+              <span className="hidden text-sm group-hover:block">
                 Your Haiku must follow the 5-7-5 syllabic structure.
               </span>
             </button>
