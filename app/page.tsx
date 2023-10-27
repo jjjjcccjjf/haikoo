@@ -1,6 +1,5 @@
 import logo from "@/app/logo.png";
 import AuthCard from "@/components/AuthCard";
-import AuthCard2 from "@/components/AuthCard2";
 import CreateHaikuCard from "@/components/CreateHaikuCard";
 import HaikuCardsSection from "@/components/RealtimeHaikuCardsSection";
 // import TopHashtags from "@/components/_TopHashtags";
@@ -49,7 +48,7 @@ export default async function Index() {
     <>
       {/* <pre>{JSON.stringify(userWithProfile)}</pre> */}
       {/* <pre>{JSON.stringify(data)}</pre> */}
-      <section className="container flex border-b border-secondary md:p-8 p-4">
+      <section className="container flex border-b border-secondary md:p-8 md:pb-4 p-4">
         <div className="hidden min-h-full w-1/4 p-4 md:block">
           <TopHashtags />
         </div>
