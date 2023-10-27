@@ -82,9 +82,9 @@ export default function RealtimeHaikuCardsSection({
   }, [haikus]);
 
   return (
-    <>
+    <section className="NO:max-h-[33rem] container grid grid-cols-1 gap-6 overflow-hidden px-4 py-8 sm:grid-cols-2 md:px-12 md:py-8 lg:grid-cols-3 lg:gap-8">
       {haikuLists.list1.length > 0 ? (
-        <section className="NO:max-h-[33rem] container grid grid-cols-1 gap-6 overflow-hidden px-4 py-8 md:py-4 sm:grid-cols-2 md:px-12 lg:grid-cols-3 lg:gap-8">
+        <>
           <ul className="space-y-8">
             {haikuLists.list1.map((item) => {
               return <HaikuCard contents={item} key={item.id} />;
@@ -100,17 +100,17 @@ export default function RealtimeHaikuCardsSection({
               return <HaikuCard contents={item} key={item.id} />;
             })}
           </ul>
-        </section>
+        </>
       ) : (
         <EmptyHaikuCardsSection />
       )}
-    </>
+    </section>
   );
 }
 
 export function EmptyHaikuCardsSection() {
   return (
-    <section className="NO:max-h-[33rem] container grid grid-cols-1 gap-6 overflow-hidden px-12 py-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
+    <>
       <ul className="space-y-8">
         <HaikuCardSkeleton />
         <HaikuCardSkeleton variant="nohashtags" />
@@ -126,6 +126,6 @@ export function EmptyHaikuCardsSection() {
         <HaikuCardSkeleton variant="nohashtags" />
         <HaikuCardSkeleton />
       </ul>
-    </section>
+    </>
   );
 }
