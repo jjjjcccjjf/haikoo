@@ -3,7 +3,7 @@
 import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 
-const postHaiku = async (formData: FormData) => {
+export const postHaiku = async (formData: FormData) => {
   try {
     const supabase = createRouteHandlerClient({ cookies });
     const body = String(formData.get("body"));
@@ -61,7 +61,7 @@ const postHaiku = async (formData: FormData) => {
   }
 };
 
-const updateProfile = async (formData: FormData) => {
+export const updateProfile = async (formData: FormData) => {
   try {
     const supabase = createRouteHandlerClient({ cookies });
     const username = String(formData.get("username"));
@@ -82,5 +82,4 @@ const updateProfile = async (formData: FormData) => {
     return "error";
   }
 };
-
-export { postHaiku, updateProfile };
+ 
