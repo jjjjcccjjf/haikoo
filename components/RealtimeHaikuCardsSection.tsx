@@ -2,10 +2,11 @@
 
 import { HaikuWithDetails } from "@/types";
 import supabase from "@/utils/supabase";
-import { useEffect, useReducer, useState } from "react";
+import { useWindowSize } from "@uidotdev/usehooks";
+import { useEffect, useMemo, useReducer, useState } from "react";
 import HaikuCard, { HaikuCardSkeleton } from "./HaikuCard";
+import { toast } from "./ui/use-toast";
 export const revalidate = 0;
-
 interface State {
   list1: HaikuWithDetails[];
   list2: HaikuWithDetails[];
@@ -30,6 +31,9 @@ export default function RealtimeHaikuCardsSection({
 }) {
   const [haikus, setHaikus] = useState(serverHaikus);
   const [haikuLists, dispatch] = useReducer(reducer, initialState);
+  // TODO: Debate whether to handle resize events or simply just get the window size on mount
+  const windowSize = useWindowSize();
+  const sizeMemo = useMemo(() => windowSize, [windowSize]);
 
   const handleRealtime = async (payload: any) => {
     const { data, error } = await supabase
@@ -41,6 +45,13 @@ export default function RealtimeHaikuCardsSection({
       )
       .eq("id", payload.new.id)
       .single();
+
+    if (error) {
+      return toast({
+        title: "Uh oh!",
+        description: `It looks like posts cannot be retrieved this time. Please try again later. Error code: ${error.code}`,
+      });
+    }
 
     setHaikus((prevHaikus) => [data as HaikuWithDetails, ...prevHaikus]);
   };
@@ -66,12 +77,30 @@ export default function RealtimeHaikuCardsSection({
 
   useEffect(() => {
     const sliceData = () => {
-      const list1Data = haikus.slice(0, haikus.length / 3);
+      let divideBy = 1;
+      const LARGE_SCREEN = 1024;
+      const MEDIUM_SCREEN = 768;
+      const SMALL_SCREEN = 0;
+
+      if (sizeMemo && sizeMemo.width !== null) {
+        if (sizeMemo.width >= LARGE_SCREEN) {
+          divideBy = 3;
+        } else if (sizeMemo.width >= MEDIUM_SCREEN) {
+          divideBy = 2;
+        } else if (sizeMemo.width >= SMALL_SCREEN) {
+          divideBy = 1;
+        }
+      }
+
+      // we populate each list here depending on the screen size
+      // for small screens, only populate one long continuous list
+      // for med screens, populate two long lists, and so on
+      const list1Data = haikus.slice(0, haikus.length / divideBy);
       const list2Data = haikus.slice(
-        haikus.length / 3,
-        (2 * haikus.length) / 3,
+        haikus.length / divideBy,
+        (2 * haikus.length) / divideBy,
       );
-      const list3Data = haikus.slice((2 * haikus.length) / 3);
+      const list3Data = haikus.slice((2 * haikus.length) / divideBy);
 
       dispatch({ field: "list1", value: list1Data });
       dispatch({ field: "list2", value: list2Data });
@@ -79,7 +108,7 @@ export default function RealtimeHaikuCardsSection({
     };
 
     sliceData();
-  }, [haikus]);
+  }, [haikus, sizeMemo]);
 
   return (
     <section className="NO:max-h-[33rem] container grid grid-cols-1 gap-6 overflow-hidden px-4 py-8 sm:grid-cols-2 md:px-12 md:py-8 lg:grid-cols-3 lg:gap-8">
