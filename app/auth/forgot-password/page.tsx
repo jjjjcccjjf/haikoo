@@ -1,26 +1,31 @@
 "use client";
 
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
+    Card,
+    CardContent,
+    CardDescription,
+    CardFooter,
+    CardHeader,
+    CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import React, { useState } from "react";
-import { Toaster } from "@/components/ui/toaster";
-
 import { useToast } from "@/components/ui/use-toast";
+import { AlertCircle } from "lucide-react";
+import { useSearchParams } from "next/navigation";
+import React, { useState } from "react";
 
 export default function ForgotPassword() {
   const { toast } = useToast();
+  const params = useSearchParams();
+
   const [newPass, setNewPass] = useState("");
   const [confirmPass, setConfirmPass] = useState("");
 
+  console.log(params);
+  
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const isPasswordsMatching = newPass === confirmPass;
@@ -72,7 +77,13 @@ export default function ForgotPassword() {
                     required={true}
                   />
                 </div>
-                <div className="flex flex-col space-y-1.5"></div>
+                <div className="flex flex-col space-y-1.5">
+                  <Alert variant="destructive">
+                    <AlertCircle className="h-4 w-4" />
+                    <AlertTitle>Uh oh!</AlertTitle>
+                    <AlertDescription></AlertDescription>
+                  </Alert>
+                </div>
               </div>
             </CardContent>
             <CardFooter className="flex justify-between gap-4">
@@ -84,7 +95,6 @@ export default function ForgotPassword() {
           </form>
         </Card>
       </section>
-      <Toaster />
     </>
   );
 }

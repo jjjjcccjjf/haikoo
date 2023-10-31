@@ -1,3 +1,4 @@
+import { Toaster } from "@/components/ui/toaster";
 import "./globals.css";
 
 export const metadata = {
@@ -24,6 +25,7 @@ export default function RootLayout({
           className={`dark flex min-h-screen flex-col items-center bg-background ${rubik.variable} font-sans`}
         >
           {children}
+          <Toaster />
         </main>
       </body>
     </html>

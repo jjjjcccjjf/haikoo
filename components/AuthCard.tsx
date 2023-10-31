@@ -19,6 +19,7 @@ import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
 import { TypographyP } from "./ui/typography";
 import { updateProfile } from "@/utils/actions";
+import supabase from "@/utils/supabase";
 type Profile = Database["public"]["Tables"]["profiles"]["Row"];
 
 interface UserWithProfile extends User {
@@ -229,6 +230,11 @@ function LoginForm() {
         size={"lg"}
         type="button"
         className="font-normal text-muted-foreground"
+        onClick={async () => {
+          await supabase.auth.resetPasswordForEmail("lorenzosalamante@gmail.com", {
+            redirectTo: "http://localhost:3000/auth/forgot-password",
+          });
+        }}
       >
         Reset your password
       </Button>
